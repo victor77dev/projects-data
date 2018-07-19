@@ -1,0 +1,30 @@
+{
+  "name": "projects-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node --presets env --plugins transform-object-rest-spread index.js",
+    "update": "babel-node --presets env --plugins transform-object-rest-spread index.js update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victor77dev/projects-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victor77dev/projects-data/issues"
+  },
+  "homepage": "https://github.com/victor77dev/projects-data#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "fs": "0.0.1-security"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
+}
