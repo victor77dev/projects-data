@@ -62,9 +62,18 @@ async function saveAllReactRocksData() {
 
   // All tags data
   const updatedTagsJson = tags.reduce((list, data, index) => {
-    list[index] = data;
+    list[index] = { tag: data, project: [] };
     return list;
   }, {});
+  // Add project list to tag data
+  projects.reduce((tagList, data, projectIndex) => {
+    const { n: name } = data;
+    const curProjectTags = projectTags[projectIndex];
+    if (curProjectTags !== null) {
+      curProjectTags.forEach((tagIndex) => tagList[tagIndex].project.push(name));
+    }
+    return tagList;
+  }, updatedTagsJson);
   fs.writeFile('tags.json', JSON.stringify(updatedTagsJson, null, 2));
 
   // Save project data with tags and all tags data
