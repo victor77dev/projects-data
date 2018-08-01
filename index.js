@@ -1,5 +1,6 @@
 const fs = require('fs');
 import getReactRocksData from './reactRocksData';
+import { genLabelImage, genCircularLabelImage } from './genImageLabel';
 
 let projectData = null;
 
@@ -26,6 +27,9 @@ async function saveAllReactRocksData() {
   await loadReactProjectData();
   const { projects, tags, project_tags: projectTags } = projectData;
 
+  // Generate More Projects Text Label for button
+  genCircularLabelImage('Button_more_projects', 'More');
+
   // Update projects data
   const updatedProjectsJson = projects.reduce((list, data, index) => {
     // Rename the keys in projects data
@@ -34,10 +38,11 @@ async function saveAllReactRocksData() {
       d: demoUrl,
       g: blogUrl,
       i: description,
-      n: name,
+      n: key,
       s: documentUrl,
       ...unknown,
     } = data;
+    const name = key;
     const renameData = {
       index,
       codeUrl,
@@ -53,8 +58,8 @@ async function saveAllReactRocksData() {
     const dataTags = curProjectTags !== null ? curProjectTags.map((tagIndex) => tags[tagIndex]) : [];
     // Add tags to data
     const renameDataWithTags = { tags: dataTags, ...renameData };
-    list.projects[name] = renameData;
-    list.projectsWithTags[name] = renameDataWithTags;
+    list.projects[key] = renameData;
+    list.projectsWithTags[key] = renameDataWithTags;
     return list;
   }, { projects: {}, projectsWithTags: {} });
   fs.writeFile('projects.json', JSON.stringify(updatedProjectsJson.projects, null, 2));
@@ -62,6 +67,9 @@ async function saveAllReactRocksData() {
 
   // All tags data
   const updatedTagsJson = tags.reduce((list, data, index) => {
+    const key = data;
+    const name = key;
+    genLabelImage(key, name);
     list[index] = { tag: data, project: [] };
     return list;
   }, {});
